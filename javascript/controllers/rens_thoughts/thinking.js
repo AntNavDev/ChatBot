@@ -1,26 +1,55 @@
 class Thinking {
+
     process_request( input )
     {
-        var greeting_regex = '([hH]i|ey|ello|[yY]o)';
-        var is_greeting = input.match( greeting_regex );
-        console.log( is_greeting );
-        if( is_greeting )
+        var my_response = this.response_type( input, this.regex_list() );
+
+        switch( my_response )
         {
-            return this.greeting();
+            case 'greeting':
+                return this.greeting();
+                break;
+            default:
+                return this.i_dont_understand();
+                break;
+        }
+    }
+
+    regex_list()
+    {
+        return {
+            'greeting' : new RegExp(/(^([H])(i|ey|ello)|^[Y]o$)/i)
+        };
+    }
+
+    response_type( query, arr )
+    {
+        for( var key in arr )
+        {
+            if( query.match( arr[ key ] ) )
+            {
+                return key;
+            }
+        }
+    }
+
+    greeting( name = '' )
+    {
+        if( name )
+        {
+            return 'Hi, ' + name;
         }
         else
         {
-            return this.i_dont_understand();
+            return 'Hi, stranger!';
         }
     }
-    greeting()
-    {
-        return 'Hi!';
-    }
+
     i_dont_understand()
     {
         return 'I don\'t understand that phrase...';
     }
+
 }
 
 module.exports = Thinking;
