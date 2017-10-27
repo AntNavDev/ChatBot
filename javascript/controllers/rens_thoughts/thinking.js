@@ -27,8 +27,9 @@ console.log('going to parse my_response: ' + my_response);
                 return this.greeting();
                 break;
             // Questions
-            case 'my_name':
-                return this.my_name();
+            case 'name':
+                var name_query = this.response_type( input, this.regex_list_name() );
+                return this[ name_query ]();
                 break;
             case 'i_dont_know':
                 return this.i_dont_know();
@@ -37,6 +38,14 @@ console.log('going to parse my_response: ' + my_response);
                 return this.i_dont_understand();
                 break;
         }
+    }
+
+    regex_list_question_responses()
+    {
+        return {
+            'name' : new RegExp(/[n](ame)/i),
+            'i_dont_know' : new RegExp( /(\?)*$/i )
+        };
     }
 
     regex_list_request_type()
@@ -54,15 +63,12 @@ console.log('going to parse my_response: ' + my_response);
         };
     }
 
-    regex_list_question_responses()
+    regex_list_name()
     {
         return {
-            'my_name' : new RegExp(/[n](ame)/i),
-            'i_dont_know' : new RegExp( /(\?)*$/i )
+            'my_name' : new RegExp( /[y](our)/i ),
+            'your_name' : new RegExp( /[m](y)/i )
         };
-        // return {
-        //     '' : 
-        // };
     }
 
     response_type( query, arr )
@@ -91,6 +97,11 @@ console.log('going to parse my_response: ' + my_response);
     my_name()
     {
         return 'My name is Ren!';
+    }
+
+    your_name()
+    {
+        return 'I don\'t have any information on other people\'s names...';
     }
 
     i_dont_know()

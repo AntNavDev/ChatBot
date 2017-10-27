@@ -12,7 +12,9 @@ var exphbs = require( 'express-handlebars' );
 app.engine( 'handlebars', exphbs( { defaultLayout: '../../../views/layouts/body' } ) );
 app.set( 'view engine', 'handlebars' );
 
-
+// Add CSS
+const path = require( 'path' );
+app.use( '/', express.static( '../public' ) );
 
 app.get( '/', function( request, response ) {
     response.render( '../../views/face' );
